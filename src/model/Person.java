@@ -1,19 +1,23 @@
+package model;
+
+import java.time.LocalDate;
+
 public class Person {
 
-    private String date;            //Date
+    private LocalDate birthDate;
     private String name;
 
-    public Person(String date, String name) {
-        this.date = date;
+    public Person(LocalDate birthDate, String name) {
+        this.birthDate = birthDate;
         this.name = name;
     }
 
-    public String getDate() {
-        return date;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getName() {
@@ -26,10 +30,8 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "date='" + date + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return name + " has his/her birthday on " +
+                birthDate.getMonth() + " " + birthDate.getDayOfMonth();
     }
 }
 

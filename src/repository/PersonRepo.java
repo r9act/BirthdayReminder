@@ -1,11 +1,13 @@
+package repository;
+
+import model.Person;
+
 import java.util.List;
 
 public interface PersonRepo {
-    List<Person> showAll();
-    List<Person> showOncoming();
+    List<Person> getAll();
     Person findByName(String name);
-    List<Person> updateByName(String name, String newDate);   //почему предлагает сделать void
-    List<Person> removeByName(String name);                     //почему предлагает сделать void
-    List<Person> removeAll();
-
+    void updateByName(String name, int updateDay, int updateMonth, int updateYear);
+    void removeByName(String name);
+    void removeAll();
 }

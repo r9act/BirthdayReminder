@@ -1,19 +1,17 @@
-package service;
+package job;
 
-import factory.RepoFactory;
+import factory.OncomingBirthdaysFactory;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import repository.PersonRepo;
+import service.OncomingBirthdays;
 
-public class SimpleJob implements Job {
+public class BirthdayJob implements Job {
 
-    PersonRepo repo = RepoFactory.getInstance();
-    OncomingBirthdays oncomingBirthdays = new OncomingBirthdays();
-
+    OncomingBirthdays oncomingBirthdays = OncomingBirthdaysFactory.getInstance();
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        oncomingBirthdays.showPersonWithInterval(20);
+        oncomingBirthdays.showPersonWithInterval(30);
     }
 }

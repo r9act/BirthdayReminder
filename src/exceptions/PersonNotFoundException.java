@@ -1,4 +1,5 @@
 package exceptions;
 
-public class PersonNotFound extends RuntimeException{
+public class PersonNotFoundException extends RuntimeException{
+
 }

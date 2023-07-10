@@ -1,5 +1,8 @@
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+package repository;
+
+import exceptions.PersonNotFoundException;
+import model.Person;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,77 +16,54 @@ public class PersonRepoImpl implements PersonRepo {
     }
 
     @Override
-    public List<Person> showAll() {
+    public List<Person> getAll() {
         return new ArrayList<>(list);
-    }
-
-    @Override
-    public List<Person> showOncoming() {
-        List<Person> oncomingList = new ArrayList<>();
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.now();
-        int currentDay = localDate.getDayOfMonth();
-        int currentMonth = localDate.getMonthValue();
-
-        for (Person p : list) {
-            String line = p.getDate();
-
-            String[] numbers = line.split("/");
-            int day = Integer.parseInt(numbers[0]);
-            int month = Integer.parseInt(numbers[1]);
-
-            switch (month - currentMonth) {
-                case 0:
-                    if (day - currentDay >= 0 && day - currentDay <= 3) {
-                        oncomingList.add(p);
-                    }
-                    break;
-                case 1:
-                    if (currentDay >= 27 && day <= 3) oncomingList.add(p);
-                    break;
-            }
-        }
-        if (oncomingList.isEmpty()) System.out.println("No oncoming BDays!");
-        return new ArrayList<>(oncomingList);
     }
 
     @Override
     public Person findByName(String name) {
+
         for (Person p : list) {
-            if (p.getName().equals(name)) {
+            if (p.getName().equals(name)) {                 //не совсем понятно как возвращается либо p либо exception
                 return p;
             }
         }
-        throw new RuntimeException("Person " + name + " not found!");
+        throw new PersonNotFoundException("Person not found!");
     }
 
     @Override
-    public List<Person> updateByName(String name, String newDate) {
+    public void updateByName(String name, int updateDay, int updateMonth, int updateYear) {
+
+        LocalDate newDate = LocalDate.of(updateYear, updateMonth, updateDay);
+
         for (Person p : list) {
             if (p.getName().equals(name)) {
-                p.setDate(newDate);
-                return new ArrayList<>(list);
+                p.setBirthDate(newDate);
+                System.out.println("Person " + name + " updated successfully!");
             }
         }
-        throw new RuntimeException("Person " + name + " not found!");
+    }
+//Через итератор
+//    public void removeByName(String name){
+//        Iterator<Person> itr = list.iterator();
+//        while (itr.hasNext()){
+//            Person next = itr.next();
+//            if(next.getName().equals(name)) itr.remove();
+//        }
+//    }
+
+    @Override
+    public void removeByName(String name) {
+        if (list.removeIf(p -> p.getName().equals(name))) {
+            System.out.println("Person " + name + " was removed!");
+        } else throw new PersonNotFoundException("Person not found!");
+
     }
 
     @Override
-    public List<Person> removeByName(String name) {
-        for (Person p : list) {
-            if (p.getName().equals(name)) {
-                list.remove(p);
-                return new ArrayList<>(list);
-            }
-        }
-        throw new RuntimeException("Person " + name + " not found!");
-    }
-
-    @Override
-    public List<Person> removeAll() {
+    public void removeAll() {
         list.clear();
-        return new ArrayList<>(list);
+        System.out.println("Repo was cleared successfully!");
     }
-
 }
+
