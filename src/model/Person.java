@@ -1,6 +1,6 @@
 public class Person {
 
-    private String date;
+    private String date;            //Date
     private String name;
 
     public Person(String date, String name) {
@@ -32,3 +32,4 @@ public class Person {
                 '}';
     }
 }
+

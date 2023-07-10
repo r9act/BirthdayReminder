@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Parser {
+public class PersonParser {
 
 
     public static List<Person> readFromExcel(String file) throws IOException, ParseException {

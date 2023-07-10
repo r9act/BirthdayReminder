@@ -1,23 +1,15 @@
-import java.io.IOException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonRepoImpl implements PersonRepo {
-                                                                    //переделать на Map
-    private static List<Person> list = new ArrayList<>();            //почему нельзя сделать final как в NotesRepoImpl
 
-    @Override
-    public List<Person> addFromFile() {                                 //лишний метод?
-        try {
-            PersonRepoImpl.list = Parser.readFromExcel("baza.xlsx");
-        } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
-        }
-        return PersonRepoImpl.list;
+    private final List<Person> list;
+
+    public PersonRepoImpl(List<Person> list) {
+        this.list = list;
     }
 
     @Override

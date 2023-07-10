@@ -1,7 +1,6 @@
 import java.util.List;
 
 public interface PersonRepo {
-    List<Person> addFromFile();         //почему предлагает сделать void
     List<Person> showAll();
     List<Person> showOncoming();
     Person findByName(String name);
