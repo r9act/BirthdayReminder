@@ -11,7 +11,8 @@ public class ProvideExcelFile {
 
     public static List<Person> getPersonList() throws IOException {
         Scanner sc = new Scanner(System.in);
-        String filePath = sc.nextLine();
+//        String filePath = sc.nextLine();
+        String filePath = "baza.xlsx";
         return PersonServiceImpl.readFromExcel(filePath);
     }
 }

@@ -6,12 +6,18 @@ import org.quartz.JobExecutionException;
 import service.PersonService;
 import service.PersonServiceImpl;
 
+import java.sql.SQLException;
+
 public class BirthdayJob implements Job {
 
     PersonService personService = new PersonServiceImpl();
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        personService.showPersonWithInterval(30);
+        try {
+            personService.showPersonWithInterval(30);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

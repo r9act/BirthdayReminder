@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Person {
 
+    private int id;
     private LocalDate birthDate;
     private String name;
 

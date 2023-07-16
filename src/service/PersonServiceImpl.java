@@ -8,6 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import repository.PersonRepo;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class PersonServiceImpl implements PersonService {
     PersonRepo personRepo = RepoFactory.getInstance();
 
     @Override
-    public List<Person> showAll() {
+    public List<Person> showAll() throws SQLException {
         if (!personRepo.getAll().isEmpty()) {
             return personRepo.getAll();
         }
@@ -26,7 +27,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public boolean findPersonByname(String name) {
+    public boolean findPersonByname(String name) throws SQLException {
         Optional<Person> personExist = personRepo.findByName(name);
         if (personExist.isPresent()) {
             personRepo.findByName(name);
@@ -36,7 +37,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public boolean updatePersonByname(String name, int updateDay, int updateMonth, int updateYear) {
+    public boolean updatePersonByname(String name, int updateDay, int updateMonth, int updateYear) throws SQLException {
         Optional<Person> personExist = personRepo.findByName(name);
         if (personExist.isPresent()) {
             personRepo.updateByName(name, updateDay, updateMonth, updateYear);
@@ -46,7 +47,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public boolean removePersonByName(String name) {
+    public boolean removePersonByName(String name) throws SQLException {
         Optional<Person> personExist = personRepo.findByName(name);
         if (personExist.isPresent()) {
             personRepo.removeByName(name);
@@ -55,7 +56,7 @@ public class PersonServiceImpl implements PersonService {
         return false;
     }
 
-    public List<Person> showPersonWithInterval(int daysBefore) {
+    public List<Person> showPersonWithInterval(int daysBefore) throws SQLException {
 
         List<Person> oncomingList = new ArrayList<>();
         List<Person> list = personRepo.getAll();
