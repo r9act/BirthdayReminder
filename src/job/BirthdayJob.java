@@ -1,17 +1,17 @@
 package job;
 
-import factory.OncomingBirthdaysFactory;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import service.OncomingBirthdays;
+import service.PersonService;
+import service.PersonServiceImpl;
 
 public class BirthdayJob implements Job {
 
-    OncomingBirthdays oncomingBirthdays = OncomingBirthdaysFactory.getInstance();
+    PersonService personService = new PersonServiceImpl();
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        oncomingBirthdays.showPersonWithInterval(30);
+        personService.showPersonWithInterval(30);
     }
 }

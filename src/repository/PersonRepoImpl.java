@@ -1,11 +1,11 @@
 package repository;
 
-import exceptions.PersonNotFoundException;
 import model.Person;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PersonRepoImpl implements PersonRepo {
 
@@ -21,28 +21,30 @@ public class PersonRepoImpl implements PersonRepo {
     }
 
     @Override
-    public Person findByName(String name) {
+    public Optional<Person> findByName(String name) {               //как получить ИМЯ+ДР -- можем изъять это из Optional.of(p)
 
         for (Person p : list) {
-            if (p.getName().equals(name)) {                 //не совсем понятно как возвращается либо p либо exception
-                return p;
+            if (p.getName().equals(name)) {
+                return Optional.of(p);
             }
         }
-        throw new PersonNotFoundException("Person not found!");
+        return Optional.empty();
     }
 
     @Override
-    public void updateByName(String name, int updateDay, int updateMonth, int updateYear) {
+    public Optional<Person> updateByName(String name, int updateDay, int updateMonth, int updateYear) {
 
         LocalDate newDate = LocalDate.of(updateYear, updateMonth, updateDay);
 
         for (Person p : list) {
             if (p.getName().equals(name)) {
                 p.setBirthDate(newDate);
-                System.out.println("Person " + name + " updated successfully!");
+                return Optional.of(p);
             }
         }
+        return Optional.empty();
     }
+
 //Через итератор
 //    public void removeByName(String name){
 //        Iterator<Person> itr = list.iterator();
@@ -53,17 +55,18 @@ public class PersonRepoImpl implements PersonRepo {
 //    }
 
     @Override
-    public void removeByName(String name) {
+    public Optional<String> removeByName(String name) {         //вернул вместо Person, имя, потому что из-за лямбды переменная p не в скопе
         if (list.removeIf(p -> p.getName().equals(name))) {
-            System.out.println("Person " + name + " was removed!");
-        } else throw new PersonNotFoundException("Person not found!");
-
+            return Optional.of(name);
+            //System.out.println("Person " + name + " was removed!");
+        }
+        return Optional.empty();
     }
 
     @Override
-    public void removeAll() {
+    public String removeAll() {
         list.clear();
-        System.out.println("Repo was cleared successfully!");
+        return "Repo was cleared successfully!";
     }
 }
 
